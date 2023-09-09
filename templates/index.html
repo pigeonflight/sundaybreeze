@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if session.user %}
+<h2>Welcome, {{ session.user }}!</h2>
+<h3>Birthdays This Week:</h3>
+<ul>
+    {% for person in birthdays %}
+    <li>{{ person['first_name'] }} {{ person['last_name'] }} has a birthday this week</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('logout') }}">Logout</a>
+{% else %}
+<p>{{ get_flashed_messages() }}</p>
+<a href="{{ url_for('login') }}">Login</a>
+{% endif %}
+{% endblock %}
+
