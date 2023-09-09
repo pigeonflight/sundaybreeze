@@ -48,7 +48,6 @@ def get_birthdays_thisweek():
     if is_sunday:
         people_with_birthdays = get_birthdays(people)
     people_with_birthdays = get_birthdays(people, next_week=True)
-    import ipdb;ipdb.set_trace()
     # this is ugly because I store details in a tuple (details,birthdate)
     return [{'last_name':person[0]['last_name'],'first_name':person[0]['first_name'],"birthdate":format_birthdate(person[1])} for person in people_with_birthdays]
 
