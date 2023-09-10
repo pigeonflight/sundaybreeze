@@ -1,0 +1,39 @@
+{% if session.user_info %}
+
+{% if anniversaries %}
+{% for person in anniversaries %}
+<div class="email-item email-item-unread pure-g" hx-boost="true" hx-target="maincontent">
+
+    <a href="/person/{{ person['id']}}" hx-boost="swap" hx-get="/person/{{ person['id']}}" hx-trigger="click"
+        hx-swap="innerHTML" hx-target="#maincontent">
+
+        <div class="pure-u">
+            <img width="64" height="64" alt="{{ person['first_name'] }} {{ person['last_name'] }}&#x27;s avatar"
+                class="email-avatar" src="https://files.breezechms.com/{{ person['path'] }}">
+        </div>
+
+        <div class="pure-u-3-4">
+            <h5 class="email-name">{{ person['first_name'] }} {{ person['last_name'] }}</h5>
+            <h4 class="email-subject">{{ person['anniversary_date'] }}</h4>
+            <p class="email-desc">
+                {% if '1019082236' in person['details'] %}
+                {{ person['details']['1019082236']['name'] }}
+                {% endif %}
+            </p>
+        </div>
+    </a>
+</div>
+{% endfor %}
+{% else %}
+<div class="email-item email-item-unread pure-g" hx-boost="true" hx-target="maincontent">
+
+    <div class="pure-u-3-4">
+        <p class="email-desc">
+            No anniversaries this week
+        </p>
+    </div>
+</div>
+
+{% endif %}
+
+{% endif %}

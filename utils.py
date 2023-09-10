@@ -1,6 +1,8 @@
 import datetime
 
-def get_birthdays(entries, next_week=False):
+
+
+def get_birthdays(entries, next_week=False, key=""):
     # Get the current date
     today = datetime.date.today()
 
@@ -43,3 +45,31 @@ def get_birthdays(entries, next_week=False):
     return sorted_birthdays
 
 
+def get_anniversaries(entries, next_week=False):
+    today = datetime.date.today()
+    
+    # Calculate the start and end dates for this week or next week
+    if next_week:
+        start_of_week = today + datetime.timedelta(days=(7 - today.weekday()))
+    else:
+        start_of_week = today - datetime.timedelta(days=today.weekday())
+    end_of_week = start_of_week + datetime.timedelta(days=6)
+    
+    # Initialize a list to store anniversaries for this or next week
+    anniversaries = []
+    
+            
+    
+    for entry in entries:
+        details = entry.get('details', {})
+        anniversary_date_str = details.get('2065014382', '')  # Get the anniversary date
+        if anniversary_date_str:
+            anniversary_date_str = f"{anniversary_date_str[:-4]}{today.year}"
+            anniversary_date = datetime.datetime.strptime(anniversary_date_str, '%m/%d/%Y').date()
+            if start_of_week <= anniversary_date <= end_of_week:
+                anniversaries.append((entry, anniversary_date))
+    
+    # Sort the anniversaries by date
+    sorted_anniversaries = sorted(anniversaries, key=lambda x: x[1])
+    
+    return sorted_anniversaries

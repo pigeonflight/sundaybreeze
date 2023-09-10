@@ -22,8 +22,12 @@
             <div class="pure-menu">
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item">
-                        <button class="secondary-button pure-button" hx-get="/birthdays" hx-target="#list" hx-trigger="load">Birthdays</button>
+                        <button class="secondary-button pure-button" hx-get="/birthdays" hx-target="#list" hx-trigger="click">Birthdays</button>
 </li>
+<li class="pure-menu-item">
+    <button class="secondary-button pure-button" hx-get="/anniversaries" hx-target="#list" hx-trigger="click">Anniversaries</button>
+</li>
+
                     <li class="pure-menu-item">
                         <a href="/logout" class="secondary-button pure-button">Logout</a>
 </li>
@@ -33,7 +37,7 @@
         </div>
     </div>
 
-    <div id="list" class="pure-u-1">
+    <div id="list" class="pure-u-1" hx-get="/birthdays"  hx-trigger="load">
         <div class="email-item email-item-selected pure-g">
             <div class="pure-u">
                 loading...
@@ -89,7 +93,7 @@
         <div class="email-content">
             <div class="email-content-header pure-g">
                 <div class="pure-u-1-2">
-                    <h1 class="email-content-title">Birthdays</h1>
+                    <h1 class="email-content-title">Birthdays & Anniversaries</h1>
                     <p class="email-content-subtitle">
                         Use this interface to keep track of birthdays and anniversaries
                     </p>

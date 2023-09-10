@@ -12,7 +12,13 @@
             <p class="person-details">
                 {% if '1019082236' in person_info['details'] %}
                 {{ person_info['details']['1019082236']['name'] }}
+                
              {% endif %}
+
+            </p>
+            <p>
+                {{ person_info['notes'] }}
+
             </p>
         </div>
     </div>
