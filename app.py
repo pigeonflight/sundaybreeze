@@ -3,6 +3,7 @@ from authlib.integrations.flask_client import OAuth
 from os import environ as env
 from breeze_utils import get_people, get_person
 from utils import get_birthdays
+from urllib.parse import quote_plus, urlencode
 import datetime
 import random
 
@@ -61,13 +62,20 @@ def profile():
     
     return render_template('profile.html', user_info=user_info)
 
+@app.route("/logout")
 def logout():
-    # Clear the user's session
     session.clear()
-
-    # Redirect to the Auth0 logout URL
-    return redirect(f'{env.get("AUTH0_DOMAIN")}/v2/logout?returnTo=' + url_for('index', _external=True))
-
+    return redirect(
+        "https://" + env.get("AUTH0_DOMAIN")
+        + "/v2/logout?"
+        + urlencode(
+            {
+                "returnTo": url_for("index", _external=True),
+                "client_id": env.get("AUTH0_CLIENT_ID"),
+            },
+            quote_via=quote_plus,
+        )
+    )
 
 # Define a route to display birthdays
 @app.route('/')
@@ -165,5 +173,3 @@ def make_nonce():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
