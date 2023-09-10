@@ -61,11 +61,12 @@ def profile():
     
     return render_template('profile.html', user_info=user_info)
 
-# Define a logout route
-@app.route('/logout')
 def logout():
-    session.pop('user_info', None)
-    return 'Logged out'
+    # Clear the user's session
+    session.clear()
+
+    # Redirect to the Auth0 logout URL
+    return redirect(f'{env.get("AUTH0_DOMAIN")}/v2/logout?returnTo=' + url_for('index', _external=True))
 
 
 # Define a route to display birthdays
