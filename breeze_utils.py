@@ -1,6 +1,5 @@
 import os
 import datetime
-from breeze import breeze
 from utils import get_birthdays
 import requests
 import json
