@@ -30,7 +30,7 @@ from authlib.oauth2 import OAuth2Error
 @app.route('/login')
 def login():
     # Generate a random nonce value (use a secure method in production)
-    nonce = 'xerAaerfaafaewrwafr'
+    nonce = make_nonce()
 
     # Save the nonce in the session to use it during callback validation
     session['nonce'] = nonce
@@ -155,6 +155,11 @@ def get_birthdays_thisweek():
 
 def format_birthdate(birthdate):
     return birthdate.strftime('%B %d')
+
+def make_nonce():
+    """Generate pseudorandom number."""
+    return str(random.randint(0, 100000000))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
