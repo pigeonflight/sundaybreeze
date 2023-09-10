@@ -4,6 +4,7 @@ from os import environ as env
 from breeze_utils import get_people, get_person
 from utils import get_birthdays
 import datetime
+import random
 
 app = Flask(__name__)
 app.secret_key = env.get("SECRET_KEY")
