@@ -97,6 +97,16 @@ def birthdays():
     birthdays = get_birthdays_thisweek()
     return render_template('birthdays.html', birthdays=birthdays)
 
+@app.route('/anniversaries')
+def anniversaries():
+    user_info = session.get('user_info')
+    if not user_info:
+        return redirect(url_for('login'))
+    if user_info['email'] not in allowed_accounts:
+        return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
+    return "this is the anniversaries view"
+    
+
 @app.route('/person/<id>')
 def person(id):
     user_info = session.get('user_info')
@@ -108,28 +118,6 @@ def person(id):
     person_info['birthday'] = tobirthday(person_info['details']['birthdate'])
     return render_template('person.html', person_info=person_info)
 
-
-# Define a route for login
-@app.route('/zlogin', methods=['GET', 'POST'])
-def zlogin():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        # Implement your authentication logic here
-        # Example: if username == 'admin' and password == 'password':
-        if username == 'admin' and password == 'password':
-            session['user'] = username
-            flash('Login successful!', 'success')
-            return redirect(url_for('index'))
-        else:
-            flash('Login failed. Please try again.', 'error')
-    return render_template('login.html')
-
-# Define a route for logout
-@app.route('/zlogout')
-def zlogout():
-    session.pop('user', None)
-    return redirect(url_for('index'))
 
 def tobirthday(input_date):
     """ takes a date in the format YYYY-MM-DD and converts it the someone's birth date for this year"""
