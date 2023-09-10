@@ -1,0 +1,21 @@
+{% if session.user_info %}
+
+
+    <div class="pure-g">
+        <div class="pure-u">
+            <img width="240" height="160" alt="{{ person_info['first_name'] }} {{ person_info['last_name'] }}&#x27;s pic" class="person-pic"
+                 src="https://files.breezechms.com/{{ person_info['path'] }}">
+        </div>
+        <div class="pure-u-3-4">
+            <h5 class="person-name">{{ person_info['first_name'] }} {{ person_info['last_name'] }}</h5>
+            <h4 class="person-birthday">{{ person_info['birthday'] }}</h4>
+            <p class="person-details">
+                {% if '1019082236' in person_info['details'] %}
+                {{ person_info['details']['1019082236']['name'] }}
+             {% endif %}
+            </p>
+        </div>
+    </div>
+
+{% endif %}
+
