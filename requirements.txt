@@ -1,5 +1,7 @@
 Authlib==1.2.1
 Flask
+Flask-Caching
 ipdb
 requests==2.31.0
+requests-cache
 gunicorn

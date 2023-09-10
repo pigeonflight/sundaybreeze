@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from authlib.integrations.flask_client import OAuth
 from os import environ as env
-from breeze_utils import get_people, get_person
-from utils import get_birthdays
+from breeze_utils import get_people, get_person, get_profile
+from utils import get_birthdays, get_anniversaries
 from urllib.parse import quote_plus, urlencode
 import datetime
 import random
+
 
 app = Flask(__name__)
 app.secret_key = env.get("SECRET_KEY")
@@ -50,6 +51,10 @@ def callback():
     user_info = oauth.auth0.parse_id_token(token,nonce)
     session['user_info'] = user_info
     return redirect(url_for('profile'))
+
+@app.route('/apiprofile')
+def apiprofile():
+    return get_profile()
 
 # Define a profile route
 @app.route('/profile')
@@ -104,6 +109,8 @@ def anniversaries():
         return redirect(url_for('login'))
     if user_info['email'] not in allowed_accounts:
         return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
+    anniversaries = get_anniversaries_thisweek()
+    return render_template('anniversaries.html', anniversaries=anniversaries)
     return "this is the anniversaries view"
     
 
@@ -116,6 +123,9 @@ def person(id):
         return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
     person_info = get_person(id)
     person_info['birthday'] = tobirthday(person_info['details']['birthdate'])
+    person_info['notes'] = ""
+    if '2065014405' in person_info['details']:
+        person_info['notes'] = person_info['details']['2065014405']
     return render_template('person.html', person_info=person_info)
 
 
@@ -133,6 +143,34 @@ def tobirthday(input_date):
 
     return formatted_date
 
+import datetime
+
+def get_anniversaries_thisweek():
+    people = get_people(details=1)  # Assuming you have a 'get_people' function
+    today = datetime.date.today()
+    is_sunday = today.weekday() == 6  # Sunday corresponds to 6 in the weekday() method
+
+    # Get anniversaries for this week or next week based on whether today is Sunday
+    if is_sunday:
+        anniversaries = get_anniversaries(people)
+    else:
+        anniversaries = get_anniversaries(people, next_week=True)
+
+    formatted_anniversaries = []
+
+    for person, anniversary_date in anniversaries:
+        formatted_anniversaries.append({
+            'last_name': person['last_name'],
+            'id': person['id'],
+            'first_name': person['first_name'],
+            'path': person['path'],
+            'anniversary_date': format_to_month_and_day(anniversary_date),
+            'details': person.get('details', {}),
+        })
+
+    return formatted_anniversaries
+
+
 def get_birthdays_thisweek():
     people = get_people(details=1)
     today = datetime.date.today()
@@ -148,10 +186,10 @@ def get_birthdays_thisweek():
              'id':person[0]['id'],
              'first_name':person[0]['first_name'],
              'path':person[0]['path'],
-             'birthdate':format_birthdate(person[1]),
+             'birthdate':format_to_month_and_day(person[1]),
              'details':person[0]['details']}  for person in people_with_birthdays]
 
-def format_birthdate(birthdate):
+def format_to_month_and_day(birthdate):
     return birthdate.strftime('%B %d')
 
 def make_nonce():

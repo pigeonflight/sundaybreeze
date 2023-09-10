@@ -27,6 +27,13 @@ def get_people_by_tag(tagname=""):
                  
     return "no matching tags found"
    
+def get_profile():
+    """ 
+      call the api/profile
+    """
+    url = f'https://{SUBDOMAIN}.breezechms.com/api/profile'
+    return make_request(url)
+  
 def get_person(id):
     """
      get person
