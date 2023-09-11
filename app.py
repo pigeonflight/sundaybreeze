@@ -1,30 +1,43 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from authlib.integrations.flask_client import OAuth
-from os import environ as env
+#from os import environ as env
 from breeze_utils import get_people, get_person, get_profile
 from utils import get_birthdays, get_anniversaries
 from urllib.parse import quote_plus, urlencode
 import datetime
 import random
+from environs import Env
+from flask_caching import Cache
 
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "SimpleCache",  # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
+
+env = Env()
+env.read_env()
 
 app = Flask(__name__)
-app.secret_key = env.get("SECRET_KEY")
+app.config.from_mapping(config)
+cache = Cache(app)
+app.secret_key = env("SECRET_KEY")
+SUBDOMAIN = env("SUBDOMAIN")
 
 
 # Configure Auth0
 oauth = OAuth(app)
 oauth.register(
     "auth0",
-    client_id=env.get("AUTH0_CLIENT_ID"),
-    client_secret=env.get("AUTH0_CLIENT_SECRET"),
+    client_id=env("AUTH0_CLIENT_ID"),
+    client_secret=env("AUTH0_CLIENT_SECRET"),
     client_kwargs={
         "scope": "openid profile email",
     },
-    server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration',
+    server_metadata_url=f'https://{env("AUTH0_DOMAIN")}/.well-known/openid-configuration',
 )
 
-allowed_accounts = env.get("ALLOWED_ACCOUNTS").split(',')
+allowed_accounts = env("ALLOWED_ACCOUNTS").split(',')
 
 from authlib.oauth2 import OAuth2Error
 
@@ -71,12 +84,12 @@ def profile():
 def logout():
     session.clear()
     return redirect(
-        "https://" + env.get("AUTH0_DOMAIN")
+        "https://" + env("AUTH0_DOMAIN")
         + "/v2/logout?"
         + urlencode(
             {
                 "returnTo": url_for("index", _external=True),
-                "client_id": env.get("AUTH0_CLIENT_ID"),
+                "client_id": env("AUTH0_CLIENT_ID"),
             },
             quote_via=quote_plus,
         )
@@ -93,6 +106,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/birthdays')
+@cache.cached(timeout=50)
 def birthdays():
     user_info = session.get('user_info')
     if not user_info:
@@ -102,7 +116,20 @@ def birthdays():
     birthdays = get_birthdays_thisweek()
     return render_template('birthdays.html', birthdays=birthdays)
 
+@app.route('/birthdays_large')
+@cache.cached(timeout=50)
+def birthdays_large():
+    user_info = session.get('user_info')
+    if not user_info:
+        return redirect(url_for('login'))
+    if user_info['email'] not in allowed_accounts:
+        return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
+    birthdays = get_birthdays_thisweek()
+    return render_template('birthdays_large.html', birthdays=birthdays)
+
+
 @app.route('/anniversaries')
+@cache.cached(timeout=50)
 def anniversaries():
     user_info = session.get('user_info')
     if not user_info:
@@ -110,7 +137,7 @@ def anniversaries():
     if user_info['email'] not in allowed_accounts:
         return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
     anniversaries = get_anniversaries_thisweek()
-    return render_template('anniversaries.html', anniversaries=anniversaries)
+    return render_template('anniversaries.html', SUBDOMAIN=SUBDOMAIN, anniversaries=anniversaries)
     return "this is the anniversaries view"
     
 

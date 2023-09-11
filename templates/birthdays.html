@@ -1,9 +1,21 @@
 {% if session.user_info %}
 
+    {% if birthdays %}
 
-    {% for person in birthdays %}
+    
     <div class="email-item email-item-unread pure-g" hx-boost="true" hx-target="maincontent">
-      
+       
+        <a href="/birthdays_large" hx-boost="swap" hx-get="/birthdays_large"
+               hx-trigger="click" hx-swap="innerHTML" hx-target="#maincontent">
+
+        <div class="pure-u-3-4">
+            <p class="email-desc">
+                generate birthday gallery for notices
+            </p>
+        </div>
+        </a>
+        
+        {% for person in birthdays %}
         <a href="/person/{{ person['id']}}" hx-boost="swap" hx-get="/person/{{ person['id']}}"
                hx-trigger="click" hx-swap="innerHTML" hx-target="#maincontent">
 
@@ -21,8 +33,10 @@
             </p>
         </div>
         </a>
+        {% endfor %}
     </div>
-    {% endfor %}
+   
 
+    {% endif %}
 {% endif %}
 
