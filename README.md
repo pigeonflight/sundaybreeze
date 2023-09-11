@@ -9,11 +9,6 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 pip install -r requirements.txt
 ```
 ### Running the app
-export the environment variables
-```
-export BREEZE_API_KEY SUBDOMAIN AUTH0_CLIENT_ID AUTH0_CLIENT_SECRET AUTH0_DOMAIN SECRET_KEY  ALLOWED_ACCOUNTS
-source .env
-```
 ```
 python app.py
 ```
@@ -24,6 +19,11 @@ This code requires a valid api key and breeze subdomain which you'll need to pro
 The file will look something like this
 ```
 BREEZE_API_KEY=9419..............
-SUBDOMAIN="somethingchapel"
+SUBDOMAIN="somethingchurch"
+AUTH0_CLIENT_ID=rxxxxxxxxxxxxxxxxxxxxxxxxxxx....
+AUTH0_CLIENT_SECRET=_6du.................................Z6lt-
+AUTH0_DOMAIN=.........................auth0.com
+# set a long secret key
+SECRET_KEY=342............DFASFDAFewre
+ALLOWED_ACCOUNTS="john@example.com,marylamb@example.com"
 ```
-~                             

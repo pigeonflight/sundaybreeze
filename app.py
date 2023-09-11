@@ -106,7 +106,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/birthdays')
-@cache.cached(timeout=50)
+@cache.cached(timeout=150)
 def birthdays():
     user_info = session.get('user_info')
     if not user_info:
@@ -117,7 +117,7 @@ def birthdays():
     return render_template('birthdays.html', birthdays=birthdays)
 
 @app.route('/birthdays_large')
-@cache.cached(timeout=50)
+@cache.cached(timeout=150)
 def birthdays_large():
     user_info = session.get('user_info')
     if not user_info:
@@ -129,7 +129,7 @@ def birthdays_large():
 
 
 @app.route('/anniversaries')
-@cache.cached(timeout=50)
+@cache.cached(timeout=150)
 def anniversaries():
     user_info = session.get('user_info')
     if not user_info:
