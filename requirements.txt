@@ -5,3 +5,4 @@ ipdb
 requests==2.31.0
 requests-cache
 gunicorn
+environs

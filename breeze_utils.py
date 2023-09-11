@@ -26,14 +26,14 @@ def get_people_by_tag(tagname=""):
         return [{'last_name':person['last_name'],'first_name':person['first_name'],'birthdate':person['details']['details']['birthdate']} for person in people]
                  
     return "no matching tags found"
-   
+
 def get_profile():
     """ 
       call the api/profile
     """
     url = f'https://{SUBDOMAIN}.breezechms.com/api/profile'
     return make_request(url)
-  
+   
 def get_person(id):
     """
      get person

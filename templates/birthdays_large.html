@@ -1,0 +1,13 @@
+{% if session.user_info %}
+
+
+    {% for person in birthdays %}
+      
+
+
+            <img width="240" height="160" alt="{{ person['first_name'] }} {{ person['last_name'] }}&#x27;s avatar" class="email-large" src="https://files.breezechms.com/{{ person['path'] }}">
+
+    {% endfor %}
+
+{% endif %}
+
