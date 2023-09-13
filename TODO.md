@@ -4,4 +4,8 @@
 - [x]  make it pretty
 - [ ]  implement a mechanism to send birthdays and anniversaries to admins
 - [ ]  create a mechanism for sending out the bulletin 
-- [ ] fix slow load of birthdays (some kind of caching)
+- [x] fix slow load of birthdays (some kind of caching)
+
+## dealing with timezones
+- [ ] when deployed to render.com it defaults to UTC timezone 
+- [ ] should probably allow setting timezone with env vars
