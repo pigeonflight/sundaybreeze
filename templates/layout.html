@@ -24,11 +24,11 @@
             <div class="pure-menu">
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item">
-                        <button class="secondary-button pure-button" hx-get="/birthdays" hx-indicator="#listloader" hx-target="#list" hx-trigger="click">Birthdays</button>
+                        <button class="secondary-button pure-button" hx-get="/birthdays" hx-indicator=".progress" hx-target="#list" hx-trigger="click">Birthdays</button>
 </li>
 <li class="pure-menu-item">
-    <button class="secondary-button pure-button" hx-get="/anniversaries" hx-indicator="#listloader" hx-target="#list" hx-trigger="click">Anniversaries
-        <img class="htmx-indicator" width="60" height="40" src="/static/img/spinner.gif">
+    <button class="secondary-button pure-button" hx-get="/anniversaries" hx-indicator=".progress" hx-target="#list" hx-trigger="click">Anniversaries
+     
     </button>
 </li>
 
@@ -41,56 +41,10 @@
         </div>
     </div>
 
-    <div id="list" class="pure-u-1" hx-get="/birthdays" hx-indicator="#loader" hx-trigger="load">
-        <img id="listloader" class="htmx-indicator" src="/static/img/spinner.gif">
-        <div class="email-item email-item-selected pure-g">
-            <div class="pure-u">
-                loading...
-                <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-            </div>
-            
-            <div class="pure-u-3-4">
-                <p class="email-desc">
-                    <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-                </p>
-            </div>
-        </div>
-
-        <div class="email-item email-item-unread pure-g">
-            <div class="pure-u">
-                <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-            </div>
-
-            <div class="pure-u-3-4">
-                <p class="email-desc">
-                    <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-                </p>
-            </div>
-        </div>
-
-        <div class="email-item pure-g">
-            <div class="pure-u">
-                <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-            </div>
-
-            <div class="pure-u-3-4">
-                <p class="email-desc">
-                    <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-                </p>
-            </div>
-        </div>
-
-        <div class="email-item pure-g">
-            <div class="pure-u">
-                <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-            </div>
-
-            <div class="pure-u-3-4">
-                <p class="email-desc">
-                    <img width="64" height="64" class="email-avatar" src="/static/img/spinner.gif">
-                </p>
-            </div>
-        </div>
+    <div id="list" class="pure-u-1" hx-get="/birthdays" hx-indicator=".progress" hx-trigger="load">
+        <div class="progress" style="height: 3px; background-color: white;">
+            <div class="indeterminate" style="background-color: red;"></div>
+      </div>
 
     </div>
 
