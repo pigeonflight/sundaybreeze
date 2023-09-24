@@ -12,6 +12,10 @@ a {
     text-decoration: none;
     color: #1b98f8;
 }
+.pure-menu-list{padding-left:.5rem;}
+.pure-menu-item {
+    margin-bottom: 0.5rem;
+}
 
 
 /*
