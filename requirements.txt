@@ -1,5 +1,5 @@
 Authlib==1.2.1
-Flask
+Flask[async]
 Flask-Caching
 ipdb
 requests==2.31.0

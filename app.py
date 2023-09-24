@@ -21,8 +21,8 @@ env.read_env()
 app = Flask(__name__)
 app.config.from_mapping(config)
 cache = Cache(app)
-app.secret_key = env("SECRET_KEY")
-SUBDOMAIN = env("SUBDOMAIN")
+app.secret_key = env("APP_SECRET_KEY")
+SUBDOMAIN = env("BREEZE_SUBDOMAIN")
 
 
 # Configure Auth0
@@ -116,16 +116,16 @@ def birthdays():
     birthdays = get_birthdays_thisweek()
     return render_template('birthdays.html', birthdays=birthdays)
 
-@app.route('/birthdays_large')
+@app.route('/birthday_gallery')
 @cache.cached(timeout=150)
-def birthdays_large():
+def birthday_gallery():
     user_info = session.get('user_info')
     if not user_info:
         return redirect(url_for('login'))
     if user_info['email'] not in allowed_accounts:
         return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
     birthdays = get_birthdays_thisweek()
-    return render_template('birthdays_large.html', birthdays=birthdays)
+    return render_template('birthday_gallery.html', birthdays=birthdays)
 
 
 @app.route('/anniversaries')

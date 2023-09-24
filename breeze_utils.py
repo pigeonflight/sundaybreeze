@@ -1,11 +1,15 @@
-import os
+from environs import Env
 import datetime
 from utils import get_birthdays
 import requests
 import json
 
-api_key = os.environ.get('BREEZE_API_KEY')
-SUBDOMAIN = os.environ.get('SUBDOMAIN')
+env = Env()
+env.read_env()
+
+
+api_key = env('BREEZE_API_KEY')
+SUBDOMAIN = env('BREEZE_SUBDOMAIN')
 
 
 def list_tags():

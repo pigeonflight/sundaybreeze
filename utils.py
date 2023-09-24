@@ -1,7 +1,5 @@
 import datetime
 
-
-
 def get_birthdays(entries, next_week=False, key=""):
     # Get the current date
     today = datetime.date.today()
@@ -15,13 +13,10 @@ def get_birthdays(entries, next_week=False, key=""):
     # Iterate through the entries and check if the birthdate falls within the selected week
     entries_with_details = [entry for entry in entries if 'birthdate' in entry['details'] or 'birthdate' in entry]
     entries_with_no_birthdate = [entry for entry in entries if 'birthdate' not in entry['details']]
-    print(f"************************* count of entries with details: {len(entries_with_details)}")
     
     for entry in entries_with_details:
-        print(f"************************* {entry}")
         details = entry['details']
         if 'birthdate' in details:
-            print(f"************************* {entry['first_name']}")
             this_year_birthday_str = f"{today.year}{details['birthdate'][4:]}"
         else:
             continue
@@ -50,13 +45,11 @@ def get_anniversaries(entries, next_week=False):
         details = entry.get('details', {})
         anniversary_date_str = details.get('2065014382', '')  # Get the anniversary date
         if anniversary_date_str:
-            print(f"---------------------> Anniversary date string: {anniversary_date_str}")
             anniversary_date_str = f"{anniversary_date_str[:-4]}{today.year}"
             anniversary_date = datetime.datetime.strptime(anniversary_date_str, '%m/%d/%Y').date()
             if '-09-' in str(anniversary_date):
-                print(f"=========================> Anniversary date: {anniversary_date} start of week: {start_of_week}, end of week {end_of_week}")
-            if start_of_week <= anniversary_date <= end_of_week:
-                anniversaries.append((entry, anniversary_date))
+                if start_of_week <= anniversary_date <= end_of_week:
+                    anniversaries.append((entry, anniversary_date))
     
     # Sort the anniversaries by date
     sorted_anniversaries = sorted(anniversaries, key=lambda x: x[1])
