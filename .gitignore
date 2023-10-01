@@ -25,3 +25,7 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+persons.csv
+notfound.txt
+success.txt
+failure.txt

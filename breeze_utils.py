@@ -14,7 +14,7 @@ SUBDOMAIN = env('BREEZE_SUBDOMAIN')
 
 def list_tags():
     url = f'https://{SUBDOMAIN}.breezechms.com/api/tags/list_tags'
-    return make_request(url)
+    return make_request(url,api_key)
 
 def get_people_by_tag(tagname=""):
     tags = list_tags()
@@ -36,14 +36,14 @@ def get_profile():
       call the api/profile
     """
     url = f'https://{SUBDOMAIN}.breezechms.com/api/profile'
-    return make_request(url)
+    return make_request(url,api_key)
    
 def get_person(id):
     """
      get person
     """
     url = f'https://{SUBDOMAIN}.breezechms.com/api/people/{id}'
-    return make_request(url)
+    return make_request(url,api_key)
 
 def get_people(details=0,filter_params={}):
     """
@@ -55,9 +55,9 @@ def get_people(details=0,filter_params={}):
     url = f'https://{SUBDOMAIN}.breezechms.com/api/people/?details={details}'
     if filter_params:
         url = f'https://{SUBDOMAIN}.breezechms.com/api/people/?details={details}&filter_json={filter_json}'
-    return make_request(url)
+    return make_request(url,api_key)
 
-def make_request(url):
+def make_request(url,api_key):
     # Set up the request headers with your API key
     headers = {
         'Content-Type': 'application/json',
