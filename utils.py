@@ -47,8 +47,9 @@ def get_anniversaries(entries, next_week=False):
         if anniversary_date_str:
             anniversary_date_str = f"{anniversary_date_str[:-4]}{today.year}"
             anniversary_date = datetime.datetime.strptime(anniversary_date_str, '%m/%d/%Y').date()
-            if '-09-' in str(anniversary_date):
-                if start_of_week <= anniversary_date <= end_of_week:
+            # import ipdb;ipdb.set_trace()
+            # if str(anniversary_date):
+            if start_of_week <= anniversary_date <= end_of_week:
                     anniversaries.append((entry, anniversary_date))
     
     # Sort the anniversaries by date
