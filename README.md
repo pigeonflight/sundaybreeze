@@ -1,8 +1,10 @@
-This is the readme
-# sundaybreeze
+# SundayBreeze
 Birthday and Anniversary Dashboard for the Breeze ChMS
 
 ![screenshot](sbreeze.jpg)
+## You'll need
+1. An Auth0 account
+2. A Breeze ChMS API Key
 
 ## Quick Start
 ### Installation
@@ -16,7 +18,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## Notes
+## Setup Notes
 
 This code requires a valid api key and breeze subdomain which you'll need to provide in an `.env` file
 The file will look something like this
@@ -30,3 +32,6 @@ AUTH0_DOMAIN=.........................auth0.com
 SECRET_KEY=342............DFASFDAFewre
 ALLOWED_ACCOUNTS="john@example.com,marylamb@example.com"
 ```
+
+## Deployment
+We deploy to [Vercel](https://vercel.com) but it should run anywhere [Flask](https://flask.palletsprojects.com/) runs
