@@ -1,5 +1,8 @@
 This is the readme
 # sundaybreeze
+Birthday and Anniversary Dashboard for the Breeze ChMS
+
+![screenshot](sbreeze.jpg)
 
 ## Quick Start
 ### Installation
