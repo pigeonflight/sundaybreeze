@@ -82,6 +82,11 @@ def profile():
 
 @app.route('/people/tags/<tag>')
 def people_by_tag(tag):
+    user_info = session.get('user_info')
+    if not user_info:
+        return redirect(url_for('login'))
+    if user_info['email'] not in allowed_accounts:
+        return f"Your account is not authorised. Ask an admin to authorise {user_info['email']}"
     # View code
     valid_tags = ['FrontL', 'FrontR', 'BackL', 'BackR']
     if tag not in valid_tags:
