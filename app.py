@@ -80,6 +80,16 @@ def profile():
     
     return render_template('profile.html', user_info=user_info)
 
+@app.route('/people/tags/<tag>')
+def people_by_tag(tag):
+    # View code
+    valid_tags = ['FrontL', 'FrontR', 'BackL', 'BackR']
+    if tag not in valid_tags:
+        return "Invalid tag"
+    people = get_people(details=1)
+    tagged_people = [person for person in people if tag in person.get('tags', [])]
+    return render_template('people_by_tag.html', people=tagged_people, tag=tag)
+
 @app.route("/logout")
 def logout():
     session.clear()
